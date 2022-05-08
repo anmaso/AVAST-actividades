@@ -1,0 +1,23 @@
+{
+  "name": "avast-actividades",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@replit/database": "^2.0.2",
+    "axios": "^0.27.2",
+    "exceljs": "^4.3.0",
+    "express": "^4.18.1",
+    "express-async-handler": "^1.2.0",
+    "json-circular-stringify": "^1.0.1",
+    "node-fetch": "^3.2.4",
+    "pug": "^3.0.2",
+    "url": "^0.11.0"
+  }
+}

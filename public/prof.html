@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>AVAST - cursos</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">    
+
+    
+    <script src="https://unpkg.com/vue@next"></script>  
+    <link rel="stylesheet" href="//unpkg.com/element-plus/dist/index.css" />
+    <script src="//unpkg.com/element-plus"></script>
+
+  </head>
+  <body>
+
+    <h1>Alumnos AVAST 2022</h1>
+    <p>Para consultar la asistencia de los alumnos, introduce el número de carnet de profesor y el DNI y pulsa "Consultar"</p>
+    <div id="vue">
+      Carnet: <input v-model="id" /><br/>
+      DNI: <input v-model="dni" /><br/>
+      <div v-if="buscando">Buscando...</div>
+      <button v-else @click="load()">Consultar</button></br>
+      <div class="course" v-for="c in courses">
+        <h2>{{c.nomActivitat}}</h2>
+        <ul>
+          <li v-for="a in c.alumnes"><span class="passaport">{{a.passaport}}</span>{{a.nomPersona}} {{a.cognoms}}</li>
+        </ul>
+      </div>
+      <textarea v-model="log"></textarea>
+
+         </div>
+  </body>
+  <script src="/prof.js"></script>
+  <style>
+    body {
+      font-family: Arial;
+      margin: 2rem;
+    }
+    .passaport {
+      display: inline-block;
+      width: 100px;
+      
+    }
+    textarea {
+      display: none;
+    }
+  </style>
+
+</html>
