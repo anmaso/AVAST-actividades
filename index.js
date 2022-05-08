@@ -20,6 +20,16 @@ app.get('/prof/:id/:dni', asyncHandler(async(req, res)=>{
   res.send(cursos);
 }))
 
+app.get('/inscripciones', asyncHandler(async(req, res)=>{
+  const id = req.params.id;
+  const dni = req.params.dni;
+  const cursos = await Playoff.inscripciones(await getToken());
+  res.send(cursos);
+}))
+
+
+
+
 app.listen(3000, () => {
   console.log('server started');
 });
