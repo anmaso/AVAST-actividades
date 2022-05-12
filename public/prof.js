@@ -31,7 +31,6 @@ const App = {
   }
 }
 const app=window.Vue.createApp(App)
-app.use(ElementPlus)
 
 app.directive('focus', {
   // When the bound element is mounted into the DOM...
