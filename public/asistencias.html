@@ -13,12 +13,15 @@
 
   </head>
   <body>
-
-    <h1>Alumnos AVAST 2022</h1>
+  <img src="https://cdn.glitch.global/ec142015-21f5-4ad3-be08-1a9568537787/avast-logo.png?v=1652606556840" width="100px">
+     <h1>Asistencias alumnos AVAST 2022</h1>
     <p>Para consultar la asistencia de los alumnos, introduce el número de carnet de profesor y el DNI y pulsa "Consultar"</p>
     <div id="vue">
-      Carnet: <input v-model="id" /><br/>
-      DNI: <input v-model="dni" /><br/>
+      
+      <label>Carnet:</label> <input v-model="id" /><br/>
+      <label>DNI:</label> <input v-model="dni" /><br/>
+      <label>Fecha:</label> <input v-model="fecha"  /><br/>
+      
       <div v-if="buscando">Buscando...</div>
       <button v-else @click="load()">Consultar</button></br>
       <div class="course" v-for="c in courses">
@@ -44,6 +47,10 @@
     }
     textarea {
       display: none;
+    }
+    label {
+      display: inline-block;
+      width:80px;
     }
   </style>
 
