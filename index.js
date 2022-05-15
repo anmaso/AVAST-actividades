@@ -17,6 +17,7 @@ const login = async() => Playoff.login(USER, PASSWORD);
 
 const getCachedToken = async()=>{
   const hit = await Db.getAsistencia('TOKEN','TOKEN');
+  console.log(hit)
   const time = (new Date()).getTime();
   if (hit && hit.length){
     try{
@@ -35,8 +36,9 @@ const getCachedToken = async()=>{
 }
 
 const setCachedToken = async(token) =>{
+  console.log("caching token", token)
   const time = (new Date()).getTime();
-  return await Db.setAsistencia('TOKEN', 'TOKEN', JSON.stringify({token, time}));
+  console.log(await Db.setAsistencia('TOKEN', 'TOKEN', JSON.stringify({token, time}), true));
 }
 
 const getToken = async ()=>{
