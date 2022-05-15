@@ -1,3 +1,6 @@
 node_modules
 datos.js
 set_env.sh
+.data
+.glitch-assets
+.breakpoints
