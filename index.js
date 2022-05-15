@@ -12,7 +12,26 @@ const app = express();
 app.use(express.static('public'))
 app.set('view engine', 'pug')
 
-const getToken = async ()=>Playoff.login(USER, PASSWORD)
+
+const login = async() => Playoff.login(USER, PASSWORD);
+
+const getToken = async ()=>{
+  try {
+     
+    const cachedToken = JSON.parse(Db.getAsistencia('TOKEN','TOKEN')[0]);
+    const time = (new Date()).getTime();
+    if (cachedToken && cachedToken[0] && (time-cachedToken.time)<60000){
+      console.log("returned cached:", cachedToken)
+      return cachedToken[0].token;
+    }
+    const token = await login();
+    const set= await Db.setAsistencia('TOKEN', 'TOKEN', JSON.stringify({token, time}));
+    return token;
+  }catch(e){
+    console.log(e);
+    return login();
+  }
+}
 
 app.get('/prof/:id/:dni/:fecha', asyncHandler(async(req, res)=>{
   const id = req.params.id;
