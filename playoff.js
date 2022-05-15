@@ -57,8 +57,9 @@ const Playoff = module.exports = {
 
   dictByCourse: (data) => {
     return data.reduce((courses, row) => {
-      var course = courses[row[FIELD.ACTIVITAT_ID] || {}] || {
-        idActivitat: row[FIELD.ACTIVITAT_ID],
+      const idActivitat = row[FIELD.ACTIVITAT_ID];
+      var course = courses[idActivitat] || {
+        idActivitat,
         nomActivitat: row[FIELD.ACTIVITAT_NOM],
         alumnes: []
       };
@@ -69,6 +70,7 @@ const Playoff = module.exports = {
         cognoms: row.cognoms
       })
 
+      courses[idActivitat]=course;
       return courses;
     }, {})
 

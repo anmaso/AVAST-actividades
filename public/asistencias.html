@@ -27,7 +27,7 @@
       <div class="course" v-for="c in courses">
         <h2>{{c.nomActivitat}}</h2>
         <ul>
-          <li v-for="a in c.alumnes"><input type="checkbox" @click="asiste(a.passaport)" value="a.asiste"><span class="passaport">{{a.passaport}}</span>{{a.nomPersona}} {{a.cognoms}}</li>
+          <li v-for="a in c.alumnes"><input type="checkbox" @change="asiste($event, a.passaport)" value="a.asiste"><span class="passaport">{{a.passaport}}</span>{{a.nomPersona}} {{a.cognoms}}</li>
         </ul>
       </div>
       <textarea v-model="log"></textarea>

@@ -27,7 +27,7 @@ const App = {
     }
     
     const asiste = (alumno)=>{
-      
+      console.log(this, alumno)
     }
     
     return {
