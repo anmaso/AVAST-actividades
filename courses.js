@@ -1,4 +1,4 @@
-const FIELD = require('./fields.js')
+wconst FIELD = require('./fields.js')
 
 module.exports = {
   byCourse: (data) => {

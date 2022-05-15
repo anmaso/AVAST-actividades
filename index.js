@@ -19,8 +19,9 @@ app.get('/prof/:id/:dni/:fecha', asyncHandler(async(req, res)=>{
   const dni = req.params.dni;
   const fecha = req.params.fecha;
   const cursos = await Playoff.cursosProfesor(await getToken(), id, dni);
+  console.log(cursos)
   if (fecha!='NODATE' && cursos && cursos.length){
-    const asistencias = Db.getAsistencia()
+    const asistencias = await Db.getAsistencia(id, fecha);
   }
   res.send(cursos);
 }))

@@ -62,8 +62,14 @@ const Playoff = module.exports = {
         nomActivitat: row[FIELD.ACTIVITAT_NOM],
         alumnes: []
       };
-      course.alumnes.push(row)
-      courses[row[FIELD.ACTIVITAT_ID]] = course;
+      console.log(course)
+      course.alumnes.push({
+        [FIELD.ACTIVITAT_ID]: course,
+        passaport: row.passaport,
+        nomPersona: row.nomPersona,
+        cognoms: row.cognoms
+      })
+
       return courses;
     }, {})
 
