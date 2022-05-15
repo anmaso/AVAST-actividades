@@ -5,58 +5,16 @@ const Db = require('./database.js')
 const asyncHandler = require('express-async-handler')
 require("json-circular-stringify");
 
-const PASSWORD = process.env['PASSWORD']
-const USER = process.env['USER']
-
-const app = express();
-app.use(express.static('public'))
-app.set('view engine', 'pug')
+const app = require('./app.js')
 
 
-const login = async() => Playoff.login(USER, PASSWORD);
+const server = express();
+server.use(express.static('public'))
+server.set('view engine', 'pug')
 
-const getCachedToken = async()=>{
-  const hit = await Db.getAsistencia('TOKEN','TOKEN');
-  console.log(hit)
-  const time = (new Date()).getTime();
-  if (hit && hit.length){
-    try{
-      const cachedInfo = JSON.parse(hit[0])
-      if ((time-cachedInfo.time)<60000){
-        console.log("returned cached:", cachedInfo)
-        return cachedInfo.token;
-      }
-      return null;
-    }catch(e){
-      console.error(e);
-      return null;
-    }
-  }
-  return null;
-}
 
-const setCachedToken = async(token) =>{
-  console.log("caching token", token)
-  const time = (new Date()).getTime();
-  console.log(await Db.setAsistencia('TOKEN', 'TOKEN', JSON.stringify({token, time}), true));
-}
 
-const getToken = async ()=>{
-    
-    const cachedToken = await getCachedToken();
-    
-    if (cachedToken) {
-      return cachedToken;
-    }
-  
-    const token = await login();
-    setCachedToken(token);
-    
-    return token;
-
-}
-
-app.get('/prof/:id/:dni/:fecha', asyncHandler(async(req, res)=>{
+server.get('/prof/:id/:dni/:fecha', asyncHandler(async(req, res)=>{
   const id = req.params.id;
   const dni = req.params.dni;
   const fecha = req.params.fecha;
@@ -68,14 +26,14 @@ app.get('/prof/:id/:dni/:fecha', asyncHandler(async(req, res)=>{
   res.send(cursos);
 }))
 
-app.get('/inscripciones', asyncHandler(async(req, res)=>{
+server.get('/inscripciones', asyncHandler(async(req, res)=>{
   const id = req.params.id;
   const dni = req.params.dni;
   const cursos = await Playoff.inscripciones(await getToken());
   res.send(cursos);
 }))
 
-app.get('/asistencia/:prof/:fecha', asyncHandler(async(req, res)=>{
+server.get('/asistencia/:prof/:fecha', asyncHandler(async(req, res)=>{
   const prof = req.params.prof;
   const fecha = req.params.fecha;
   const alumno = req.params.alumno;
@@ -85,7 +43,7 @@ app.get('/asistencia/:prof/:fecha', asyncHandler(async(req, res)=>{
   
 }))
 
-app.get('/asistencia/:prof/:fecha/:alumno/:valor', asyncHandler(async(req, res)=>{
+server.get('/asistencia/:prof/:fecha/:alumno/:valor', asyncHandler(async(req, res)=>{
   const prof = req.params.prof;
   const fecha = req.params.fecha;
   const alumno = req.params.alumno;
@@ -99,7 +57,7 @@ app.get('/asistencia/:prof/:fecha/:alumno/:valor', asyncHandler(async(req, res)=
 
 
 
-app.listen(3000, () => {
+server.listen(3000, () => {
   console.log('server started');
 });
 
