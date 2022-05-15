@@ -4,7 +4,7 @@ const Db = require("./database.js");
 const PASSWORD = process.env["PASSWORD"];
 const USER = process.env["USER"];
 
-const __cachedToken = null;
+var __cachedToken = null;
 
 const app = (module.exports = {
   login: async () => Playoff.login(USER, PASSWORD),

@@ -11,16 +11,20 @@ const PASSWORD = process.env['PASSWORD'];
 const USER = process.env['USER'];
 
 
-
-
 test('init db', async()=>{
   const db = await Db.init();
   expect(db).toBeDefined();
 })
 
 test('get token', async()=>{
-  const token = app.getToken();
+  const token = await app.getToken();
   expect(token).toBeDefined();
-  const token2 = app.getToken();
+  const token2 = await app.getToken();
   expect(token).toEqual(token2);
+})
+
+test('get asistencia no value', async()=>{
+  const prof = 'xx'+Math.random();
+  const asistencia = Db.getAsistencia(prof, prof);
+  expect(asistencia).toEqual([])
 })
