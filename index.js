@@ -18,7 +18,7 @@ server.get('/prof/:id/:dni/:fecha', asyncHandler(async(req, res)=>{
   const id = req.params.id;
   const dni = req.params.dni;
   const fecha = req.params.fecha;
-  const cursos = await Playoff.cursosProfesor(await getToken(), id, dni);
+  const cursos = await Playoff.cursosProfesor(await app.getToken(), id, dni);
   console.log(cursos)
   if (fecha!='NODATE' && cursos && cursos.length){
     const asistencias = await Db.getAsistencia(id, fecha);
@@ -29,7 +29,7 @@ server.get('/prof/:id/:dni/:fecha', asyncHandler(async(req, res)=>{
 server.get('/inscripciones', asyncHandler(async(req, res)=>{
   const id = req.params.id;
   const dni = req.params.dni;
-  const cursos = await Playoff.inscripciones(await getToken());
+  const cursos = await Playoff.inscripciones(await app.getToken());
   res.send(cursos);
 }))
 

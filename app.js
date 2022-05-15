@@ -1,50 +1,40 @@
-const Playoff = require('./playoff.js');
-const Db = require('./database.js')
+const Playoff = require("./playoff.js");
+const Db = require("./database.js");
 
-const PASSWORD = process.env['PASSWORD']
-const USER = process.env['USER']
+const PASSWORD = process.env["PASSWORD"];
+const USER = process.env["USER"];
 
-const app=module.exports = {
- login : async() => Playoff.login(USER, PASSWORD),
+const __cachedToken = null;
 
-  getCachedToken : async()=>{
-  const hit = await Db.getAsistencia('TOKEN','TOKEN');
-  console.log(hit)
-  const time = (new Date()).getTime();
-  if (hit && hit.length){
-    try{
-      const cachedInfo = JSON.parse(hit[0])
-      if ((time-cachedInfo.time)<60000){
-        console.log("returned cached:", cachedInfo)
-        return cachedInfo.token;
-      }
-      return null;
-    }catch(e){
-      console.error(e);
-      return null;
+const app = (module.exports = {
+  login: async () => Playoff.login(USER, PASSWORD),
+
+  getCachedToken: () => {
+    if (!__cachedToken) return null;
+    
+    const time = new Date().getTime();
+    if (time - __cachedToken.time < 60000){
+      return __cachedToken.token;
     }
-  }
-  return null;
-},
-
-  setCachedToken : async(token) =>{
-  console.log("caching token", token)
-  const time = (new Date()).getTime();
-  console.log(await Db.setAsistencia('TOKEN', 'TOKEN', JSON.stringify({token, time}), true));
-},
-
-  getToken : async ()=>{
+    return null;
     
-    const cachedToken = await getCachedToken();
-    
+  },
+
+  setCachedToken: async (token) => {
+    const time = new Date().getTime();
+    __cachedToken = {token, time}
+  },
+
+  getToken: async () => {
+    const cachedToken = await app.getCachedToken();
+
     if (cachedToken) {
       return cachedToken;
     }
-  
-    const token = await login();
-    app.setCachedToken(token);
-    
-    return token;
 
-}
-}
+    const token = await app.login();
+    app.setCachedToken(token);
+
+    return token;
+  },
+});
