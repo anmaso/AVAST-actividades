@@ -6,12 +6,13 @@ const App = {
   
     const dni =  Vue.ref('')
     const id = Vue.ref('')
+    const fecha = Vue.ref('')
     const buscando = Vue.ref(false)
     const courses = Vue.ref([])
     const log = Vue.ref('')
     const load = ()=>{
       buscando.value=true
-      fetch('/prof/'+id.value+'/'+dni.value).then(r=>r.json()).then(data=>{
+      fetch('/prof/'+id.value+'/'+dni.value+'/'+(fecha.value||'NODATE')).then(r=>r.json()).then(data=>{
         log.value=JSON.stringify(data,null,2)
         courses.value=data;
         buscando.value=false;
@@ -20,13 +21,24 @@ const App = {
       })
     }
     
+    const debug = ()=>{
+      dni.value='29187662H'
+      id.value='T1015'
+    }
+    
+    const asiste = (alumno)=>{
+      
+    }
+    
     return {
       dni,
       id,
       log,
       load,
       courses,
-      buscando
+      buscando,
+      debug,
+      asiste
     }
   }
 }

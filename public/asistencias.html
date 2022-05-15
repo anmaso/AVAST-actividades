@@ -18,16 +18,16 @@
     <p>Para consultar la asistencia de los alumnos, introduce el número de carnet de profesor y el DNI y pulsa "Consultar"</p>
     <div id="vue">
       
-      <label>Carnet:</label> <input v-model="id" /><br/>
+      <label>Carnet:</label> <input v-model="id" placeholder="ej. T1000"/><br/>
       <label>DNI:</label> <input v-model="dni" /><br/>
-      <label>Fecha:</label> <input v-model="fecha"  /><br/>
-      
+      <label>Fecha:</label> <input v-model="fecha" placeholder="ej. 1-5-2022" /><br/>
+      <button @click="debug">debug</button>
       <div v-if="buscando">Buscando...</div>
       <button v-else @click="load()">Consultar</button></br>
       <div class="course" v-for="c in courses">
         <h2>{{c.nomActivitat}}</h2>
         <ul>
-          <li v-for="a in c.alumnes"><span class="passaport">{{a.passaport}}</span>{{a.nomPersona}} {{a.cognoms}}</li>
+          <li v-for="a in c.alumnes"><input type="checkbox" @click="asiste(a.passaport)" value="a.asiste"><span class="passaport">{{a.passaport}}</span>{{a.nomPersona}} {{a.cognoms}}</li>
         </ul>
       </div>
       <textarea v-model="log"></textarea>

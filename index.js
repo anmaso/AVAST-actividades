@@ -14,10 +14,14 @@ app.set('view engine', 'pug')
 
 const getToken = async ()=>Playoff.login(USER, PASSWORD)
 
-app.get('/prof/:id/:dni', asyncHandler(async(req, res)=>{
+app.get('/prof/:id/:dni/:fecha', asyncHandler(async(req, res)=>{
   const id = req.params.id;
   const dni = req.params.dni;
+  const fecha = req.params.fecha;
   const cursos = await Playoff.cursosProfesor(await getToken(), id, dni);
+  if (fecha!='NODATE' && cursos && cursos.length){
+    const asistencias = Db.getAsistencia()
+  }
   res.send(cursos);
 }))
 
