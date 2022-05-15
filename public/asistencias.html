@@ -2,31 +2,32 @@
 <html lang="en">
   <head>
     <title>AVAST - cursos</title>
-    <link rel="stylesheet" href="style.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">    
-
     
     <script src="https://unpkg.com/vue@next"></script>  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
   </head>
   <body>
-  <img src="https://cdn.glitch.global/ec142015-21f5-4ad3-be08-1a9568537787/avast-logo.png?v=1652606556840" width="100px">
-     <h1>Asistencias alumnos AVAST 2022</h1>
+    <center>
+       <img src="https://cdn.glitch.global/ec142015-21f5-4ad3-be08-1a9568537787/avast-logo.png?v=1652606556840" width="100px">
+       <h1>Asistencia alumnos 2022</h1>
+
+    </center>
     <p>Para consultar la asistencia de los alumnos, introduce tu número de carnet de profesor, DNI y la fecha de la sesión de AVAST </p>
     <p>Sin fecha no podrás indicar la asistencia de los alumnos</p>
     <div id="vue">
       
       <label>Carnet:</label> <input v-model="id" placeholder="ej. T1000"/><br/>
-      <label>DNI:</label> <input v-model="dni" /><br/>
+      <label>DNI:</label> <input v-model="dni" placeholder="ej. 00000000X" /><br/>
       <label>Fecha:</label> <input v-model="fecha" placeholder="ej. 1-5-2022" /><br/>
       <br/>
-      <button @click="debug">debug</button>
+      <!--<button @click="debug">debug</button>-->
       <div v-if="buscando">Buscando...</div>
       <button v-else @click="load()">Consultar</button></br>
-      <div v-if="fechas">
+      <div v-if="fechas.length">
           <p>Fechas con asistencias guardadas:</p>
 
         <ul class="fechas" v-for="f in fechas">
@@ -49,6 +50,10 @@
     body {
       font-family: Arial;
       margin: 2rem;
+    }
+    
+    input {
+      margin-bottom: 8px;
     }
     .passaport {
       display: inline-block;
