@@ -15,19 +15,29 @@
   <body>
   <img src="https://cdn.glitch.global/ec142015-21f5-4ad3-be08-1a9568537787/avast-logo.png?v=1652606556840" width="100px">
      <h1>Asistencias alumnos AVAST 2022</h1>
-    <p>Para consultar la asistencia de los alumnos, introduce el número de carnet de profesor y el DNI y pulsa "Consultar"</p>
+    <p>Para consultar la asistencia de los alumnos, introduce tu número de carnet de profesor, DNI y la fecha de la sesión de AVAST </p>
+    <p>Sin fecha no podrás indicar la asistencia de los alumnos</p>
     <div id="vue">
       
       <label>Carnet:</label> <input v-model="id" placeholder="ej. T1000"/><br/>
       <label>DNI:</label> <input v-model="dni" /><br/>
       <label>Fecha:</label> <input v-model="fecha" placeholder="ej. 1-5-2022" /><br/>
+      <br/>
       <button @click="debug">debug</button>
       <div v-if="buscando">Buscando...</div>
       <button v-else @click="load()">Consultar</button></br>
+      <div v-if="fechas">
+          <p>Fechas con asistencias guardadas:</p>
+
+        <ul class="fechas" v-for="f in fechas">
+            <li><a href="#" @click="setFecha(f.fecha)">{{f.fecha}}</a></li>
+        </ul>
+      </div>
+
       <div class="course" v-for="c in courses">
         <h2>{{c.nomActivitat}}</h2>
         <ul>
-          <li v-for="a in c.alumnes"><input type="checkbox" @change="asiste($event, a.passaport)" value="a.asiste"><span class="passaport">{{a.passaport}}</span>{{a.nomPersona}} {{a.cognoms}}</li>
+          <li v-for="a in c.alumnes"><input type="checkbox" :disabled="!fecha" v-model="a.asiste" @change="asiste($event, c, a)" value="a.asiste"><span class="passaport">{{a.idAlumne}}</span>{{a.nomPersona}} {{a.cognoms}}</li>
         </ul>
       </div>
       <textarea v-model="log"></textarea>

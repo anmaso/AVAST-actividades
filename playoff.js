@@ -64,8 +64,7 @@ const Playoff = module.exports = {
         alumnes: []
       };
       course.alumnes.push({
-        [FIELD.ACTIVITAT_ID]: course,
-        passaport: row.passaport,
+        idAlumne: row.passaport,
         nomPersona: row.nomPersona,
         cognoms: row.cognoms
       })
@@ -79,13 +78,14 @@ const Playoff = module.exports = {
   cursosProfesor: async function(token, id, dni){  
     const profs = await Playoff.profesores(token);
     const prof = profs.find(p=>p.nif=dni&&p.residencia==id)||{};
+    //mantenemos los cursos de un profesor en el array de observaciones
+
     const cursos = (prof.observacionsColegiat||'').split('\n')
     if (!cursos.length){
       return [];
     }
     const inscripciones = await Playoff.inscripciones(token);
     const courses = Object.values(Playoff.dictByCourse(inscripciones));
-    console.log(courses.length)
     return courses.filter(c=>cursos.find(x=>x==c.nomActivitat));
   }
   
