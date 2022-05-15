@@ -126,6 +126,16 @@ module.exports = {
     } catch (dbError) {
       console.error(dbError);
     }
+  },
+  init: ()=>{
+    
+    const check = (resolve)=>{
+      setTimeout(()=>)
+    }
+    
+    return new Promise((resolve, reject)=>{
+      if (db) resolve();
+    })
   }
 };
 

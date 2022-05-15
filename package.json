@@ -1,10 +1,11 @@
 {
   "name": "avast-actividades",
+  "engines": { "node": "16" },
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node index.js"
   },
   "keywords": [],
@@ -21,6 +22,7 @@
     "pug": "^3.0.2",
     "url": "^0.11.0",
      "sqlite": "^4.0.25",
-    "sqlite3": "^5.0.7"
+    "sqlite3": "^5.0.7",
+    "jest": "^28.1.0"
   }
 }
