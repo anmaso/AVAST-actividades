@@ -62,7 +62,6 @@ const Playoff = module.exports = {
         nomActivitat: row[FIELD.ACTIVITAT_NOM],
         alumnes: []
       };
-      console.log(course)
       course.alumnes.push({
         [FIELD.ACTIVITAT_ID]: course,
         passaport: row.passaport,
@@ -84,6 +83,7 @@ const Playoff = module.exports = {
     }
     const inscripciones = await Playoff.inscripciones(token);
     const courses = Object.values(Playoff.dictByCourse(inscripciones));
+    console.log(courses.length)
     return courses.filter(c=>cursos.find(x=>x==c.nomActivitat));
   }
   
