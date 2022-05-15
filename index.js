@@ -15,22 +15,43 @@ app.set('view engine', 'pug')
 
 const login = async() => Playoff.login(USER, PASSWORD);
 
-const getToken = async ()=>{
-  try {
-     
-    const cachedToken = JSON.parse(Db.getAsistencia('TOKEN','TOKEN')[0]);
-    const time = (new Date()).getTime();
-    if (cachedToken && cachedToken[0] && (time-cachedToken.time)<60000){
-      console.log("returned cached:", cachedToken)
-      return cachedToken[0].token;
+const getCachedToken = async()=>{
+  const hit = await Db.getAsistencia('TOKEN','TOKEN');
+  const time = (new Date()).getTime();
+  if (hit && hit.length){
+    try{
+      const cachedInfo = JSON.parse(hit[0])
+      if ((time-cachedInfo.time)<60000){
+        console.log("returned cached:", cachedInfo)
+        return cachedInfo.token;
+      }
+      return null;
+    }catch(e){
+      console.error(e);
+      return null;
     }
-    const token = await login();
-    const set= await Db.setAsistencia('TOKEN', 'TOKEN', JSON.stringify({token, time}));
-    return token;
-  }catch(e){
-    console.log(e);
-    return login();
   }
+  return null;
+}
+
+const setCachedToken = async(token) =>{
+  const time = (new Date()).getTime();
+  return await Db.setAsistencia('TOKEN', 'TOKEN', JSON.stringify({token, time}));
+}
+
+const getToken = async ()=>{
+    
+    const cachedToken = await getCachedToken();
+    
+    if (cachedToken) {
+      return cachedToken;
+    }
+  
+    const token = await login();
+    setCachedToken(token);
+    
+    return token;
+
 }
 
 app.get('/prof/:id/:dni/:fecha', asyncHandler(async(req, res)=>{
