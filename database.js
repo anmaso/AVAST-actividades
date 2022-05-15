@@ -74,7 +74,7 @@ module.exports = {
    * Find and update the chosen option
    * Return the updated list of votes
    */
-  insertAsistencia: async (profesor, fecha, alumno, valor) => {
+  setAsistencia: async (profesor, fecha, alumno, valor) => {
     // Insert new Log table entry indicating the user choice and timestamp
     try {
       // Check the vote is valid

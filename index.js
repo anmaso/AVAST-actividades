@@ -28,12 +28,23 @@ app.get('/inscripciones', asyncHandler(async(req, res)=>{
   res.send(cursos);
 }))
 
-app.get('/asistencia/:prof/:fecha/:alumno', asyncHandler(async(req, res)=>{
+app.get('/asistencia/:prof/:fecha', asyncHandler(async(req, res)=>{
   const prof = req.params.prof;
   const fecha = req.params.fecha;
   const alumno = req.params.alumno;
   
-  const asistencias = await Db.getAsistencia(prof, fecha, alumno);
+  const asistencias = await Db.getAsistencia(prof, fecha);
+  res.send(asistencias)
+  
+}))
+
+app.get('/asistencia/:prof/:fecha/:alumno/:valor', asyncHandler(async(req, res)=>{
+  const prof = req.params.prof;
+  const fecha = req.params.fecha;
+  const alumno = req.params.alumno;
+  const valor = req.params.valor;
+  
+  const asistencias = await Db.setAsistencia(prof, fecha, alumno, valor);
   res.send(asistencias)
   
 }))
