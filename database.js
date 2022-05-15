@@ -37,7 +37,7 @@ dbWrapper
 
       } else {
         // We have a database already - write Choices records to log for info
-        console.log(await db.all("SELECT * from Asistencia"));
+        //console.log(await db.all("SELECT * from Asistencia"));
 
         //If you need to remove a table from the database use this syntax
         //db.run("DROP TABLE Logs"); //will fail if the table doesn't exist
@@ -128,13 +128,20 @@ module.exports = {
     }
   },
   init: ()=>{
+    var count = 0;
     
-    const check = (resolve)=>{
-      setTimeout(()=>)
+    const check = (resolve, reject)=>{
+      setTimeout(()=>{
+        if (db) return resolve(true);
+        if (count>10) return reject();
+        count++;
+        check(resolve, reject)
+        
+      }, 100)
     }
     
     return new Promise((resolve, reject)=>{
-      if (db) resolve();
+      check(resolve)
     })
   }
 };
