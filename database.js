@@ -50,6 +50,7 @@ dbWrapper
 // Our server script will call these methods to connect to the db
 module.exports = {
   
+
   /**
    * Get the options in the database
    *
@@ -59,6 +60,9 @@ module.exports = {
   getAsistencia: async (profesor, fecha) => {
     // We use a try catch block in case of db errors
     try {
+      if (!profesor){
+        return await db.all("SELECT * from Asistencia");
+      }
       return await db.all("SELECT * from Asistencia WHERE profesor='"+profesor+"' and fecha='"+fecha+"'");
     } catch (dbError) {
       // Database connection error
@@ -113,14 +117,10 @@ module.exports = {
    * Destroy everything in Log table
    * Reset votes in Choices table to zero
    */
-  clearHistory: async () => {
+  dropAsistencia: async () => {
     try {
       // Delete the logs
-      await db.run("DELETE from Log");
-
-      // Reset the vote numbers
-      await db.run("UPDATE Choices SET picks = 0");
-
+      await db.run("DELETE from Asistencia");
       // Return empty array
       return [];
     } catch (dbError) {
